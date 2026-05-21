@@ -3,6 +3,7 @@ from constants import *
 import random as r
 from board import Board
 from pacman import PacMan
+from coin import Coin
 
 pg.init()
 board = Board()
@@ -11,6 +12,16 @@ clock = pg.time.Clock()
 
 
 pacman = PacMan(3, 4)
+
+coins = []
+
+# Legg en coin på hver tilgjengelig rute (dvs. ikke vegg).
+for y in range(board.rows):
+    for x in range(board.cols):
+        if board.is_road(x, y):
+            # Unngå å plassere en coin der Pacman starter
+            if not (y == pacman.row and x == pacman.col):
+                coins.append(Coin(y, x))
 
 running = True
 while running:
@@ -32,6 +43,12 @@ while running:
     pacman.draw(vindu)
     pacman.oppdater(board)
 
+    for coin in coins:
+        coin.draw(vindu)
+        coin.oppdater(board, pacman)
+
+        if coin.collected:
+            coins.remove(coin)
 
     # Har alltid disse med til slutt:
     pg.display.flip()
