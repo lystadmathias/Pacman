@@ -54,8 +54,8 @@ class PacMan:
         # Sørg for at vi tegner midt i "Tile":
         mid = TILE_SIZE // 2
         self.rect = current_frame_image.get_rect()
-        self.rect.center = (rounded_col * TILE_SIZE + mid,
-                            rounded_row * TILE_SIZE + mid)
+        self.rect.center = (self.col * TILE_SIZE + mid,
+                            self.row * TILE_SIZE + mid)
 
         # Blit images på skjermen (der self.rect befinner seg):
         surface.blit(current_frame_image, self.rect)
@@ -65,12 +65,24 @@ class PacMan:
 
         if keys[pg.K_d]:
             self.directions = "right"
+            
+            self.col = round(self.col)
+            self.row = round(self.row)
         if keys[pg.K_a]:
             self.directions = "left"
+            
+            self.col = round(self.col)
+            self.row = round(self.row)
         if keys[pg.K_w]:
             self.directions = "up"
+            
+            self.col = round(self.col)
+            self.row = round(self.row)
         if keys[pg.K_s]:
             self.directions = "down"
+            
+            self.col = round(self.col)
+            self.row = round(self.row)
 
         # Bruker rounded posisjoner for collisionsjekk
         current_col = round(self.col)
